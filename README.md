@@ -43,8 +43,10 @@ You can skip this step if you want to do something with the weights other than r
 1. Create an app on parse.com.
 2. Secure it by disabling client class creation, making a Weight class, adding a weight number field and a person string field to it, and making the class readonly.
 3. Download the parse cli.
-4. `cd ~/src/blobbin/parse`
-5. `parse deploy`
+4. `cd ~/src/blobbin/`
+5. `parse new` to set the keys for the Parse app you want to deploy to.
+6. `cd ./parse`
+7. `parse deploy`
 
 ## Configure the python script to listen.
 

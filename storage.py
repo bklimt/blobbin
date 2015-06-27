@@ -5,9 +5,13 @@ import config
 
 def save_weight(weight):
   weight = weight * 2.20462
-  print "Saving weight %f lbs" % weight
+  person = 'bryan'
+  if person < 180:
+    person = 'amy'
+  print "Saving weight %f lbs for %s" % (weight, person)
   data = {
-    'weight': weight
+    'weight': weight,
+    'person': person,
   }
   headers = {
     'X-Parse-Application-Id': config.appId,

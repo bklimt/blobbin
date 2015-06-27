@@ -1,2 +1,3 @@
+*.pyc
 config.py
 parse/config/global.json

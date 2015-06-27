@@ -21,6 +21,7 @@
       function drawChart() {
         var query = new Parse.Query("Weight");
         query.ascending("createdAt");
+        query.equalTo("person", "bryan");
         query.find().then(function(results) {
           arr = _.map(results, function(result) {
             return [result.createdAt, result.get("weight")];

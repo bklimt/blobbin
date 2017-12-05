@@ -308,6 +308,9 @@ def main(argv):
 
     # Disconnect the balance board after exiting.
     subprocess.check_output(["bluez-test-device", "disconnect", address])
+    # subprocess.check_output(["service", "bluetooth", "stop"])
+    # time.sleep(2)
+    # subprocess.check_output(["service", "bluetooth", "start"])
 
 
 if __name__ == "__main__":

@@ -8,11 +8,22 @@ from dbus.mainloop.glib import DBusGMainLoop
 import gobject
 import gr8w8upd8m8
 import subprocess
+import sys
+import time
 
 DEVICE="00:23:CC:23:8A:55"
 
+# bluetooth is incredibly flaky, so restart it all the time
+print "Stopping bluetooth..."
+subprocess.check_output(["service", "bluetooth", "stop"])
+time.sleep(2)
+print "Starting bluetooth..."
+subprocess.check_output(["service", "bluetooth", "start"])
+time.sleep(2)
+
 dbus_loop = DBusGMainLoop()
 bus = dbus.SystemBus(mainloop=dbus_loop)
+loop = gobject.MainLoop()
 
 # Figure out the path to the headset
 manager = bus.get_object('org.bluez', '/')
@@ -45,10 +56,18 @@ def cb(prop, val, iface=None, mbr=None, path=None):
         print "\n"
         print "assuming disconnected"
         print "\n"
+        loop.quit()
 
 device.connect_to_signal("PropertyChanged", cb, interface_keyword='iface', member_keyword='mbr', path_keyword='path')
 device.connect_to_signal("Connected", cb, interface_keyword='iface', member_keyword='mbr', path_keyword='path')
 device.connect_to_signal("Disconnected", cb, interface_keyword='iface', member_keyword='mbr', path_keyword='path')
 
-loop = gobject.MainLoop()
+if connected:
+  gr8w8upd8m8.main(["bin", DEVICE])
+
+#notify = bus.get_object('org.freedesktop.Notifications', '/org/freedesktop/Notifications')
+#method = notify.get_dbus_method('Notify', 'org.freedesktop.Notifications')
+#method("wakeup", 1234, "", "The time is", "9PM", [], [], 1)
+#device.connect_to_signal("wakeup", cb)
+
 loop.run()

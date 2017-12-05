@@ -19,18 +19,23 @@
       // instantiates the pie chart, passes in the data and
       // draws it.
       function drawChart() {
+        person = "bryan";
+        if (location.hash !== "") {
+          person = location.hash.substr(1);
+        }
+
         var query = new Parse.Query("Weight");
         query.ascending("createdAt");
-        query.equalTo("person", "bryan");
+        query.equalTo("person", person);
         query.find().then(function(results) {
           arr = _.map(results, function(result) {
             return [result.createdAt, result.get("weight")];
           });
-          arr = [["Date", "Weight"]].concat(arr);
+          arr = [["Date", person]].concat(arr);
           var data = google.visualization.arrayToDataTable(arr);
-          var options = {'title':"Bryan's Weight",
-                         'width':800,
-                         'height':600};
+          var options = {'title': person + "'s weight",
+                         'width': 800,
+                         'height': 600};
 
           // Instantiate and draw our chart, passing in some options.
           var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
